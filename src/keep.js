@@ -1,5 +1,7 @@
+
 export async function handleRequest(request) {
 
+    console.log('In the handler...')
     const zipData = {
             "00501": { "lat": 40.81, "lng": -73.04 },
             "00544": { "lat": 40.81, "lng": -73.04 },
@@ -42739,15 +42741,26 @@ export async function handleRequest(request) {
             
     };
 
-    function getLatLong(zip) {
+    function getLatLong(request) {
+    // Parse the request URL
+    const url = new URL(request.url);
+
+    console.log('reqest:', request.method)
+    
+    // Assuming the URL pattern is /zip/{zipCode}, split the pathname and extract the zip code
+    const pathSegments = url.pathname.split('/');
+    const zipIndex = pathSegments.findIndex(segment => segment === 'zip') + 1;
+    const zip = pathSegments[zipIndex];
+
+    console.log('path', pathSegments,zipIndex,zip)
+
+    // You can now use the 'zip' variable in your function
+    console.log('ZIP Code:', zip);
+
         const location = zipData[zip];
         return location ? `{lat: ${location.lat}, lng: ${location.lng}}` : 'No data available for this zip code.';
     }
+    getLatLong(request)
        
-
-    return {
-        status: 200,
-        headers: { "content-type": "text/plain" },
-        body: getLatLong('99928')
-    }
+    
 }

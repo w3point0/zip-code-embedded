@@ -15,4 +15,4 @@ source = "target/zip-code-embedded.wasm"
 exclude_files = ["**/node_modules"]
 [component.zip-code-embedded.build]
 command = "npm run build"
-watch = ["src/**/*.js", "package.json"]
+watch = ["src/**/*.ts", "package.json"]
