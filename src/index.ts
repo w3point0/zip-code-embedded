@@ -42743,7 +42743,7 @@ const zipData = {
 // Type declaration for handling HTTP requests
 export const handleRequest: HandleRequest = async function (request: HttpRequest): Promise<HttpResponse> {
     // Initialize default location and response status
-    let location: { lat: number; lng: number } | undefined;
+    let location: { lat: number; lng: number; googleUrl?: string | null } | undefined;
     let status = 200;
     const requiredZipLength = 5;
 
@@ -42761,6 +42761,21 @@ export const handleRequest: HandleRequest = async function (request: HttpRequest
     }
     zipCode = formatZipCode(zipCode);
 
+    function createGoogleMapsURL(lat: Number, lng: Number) {
+        // Base URL for Google Maps with parameters for zoom (z), type (t), and query (q)
+        const baseURL = 'http://maps.google.com/maps';
+    
+        // Constructing the query parameter using the input latitude and longitude
+        const query = `loc:${lat.toString()}+${lng.toString()}`;
+    
+        // Combining all parts to form the final URL
+        const url = `${baseURL}?z=12&t=m&q=${query}`;
+        console.log('url:',url)
+    
+        // Return the full URL
+        return url;
+    }
+
     // Handle GET requests by looking up location data based on the ZIP code
     if (request.method === "GET") {
         location = zipData[zipCode as keyof typeof zipData];
@@ -42768,6 +42783,8 @@ export const handleRequest: HandleRequest = async function (request: HttpRequest
             // Set location to a default value and update status to indicate a bad request
             location = { lat: 0, lng: 0 };
             status = 400;
+        } else {
+            location.googleUrl = createGoogleMapsURL(location.lat, location.lng)
         }
     }
     

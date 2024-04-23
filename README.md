@@ -4,6 +4,10 @@
 
 This application is a cutting-edge demonstration of WebAssembly (WASM) embedded ZIP code lookup functionality, designed to operate on an EDGE server architecture distributed across eight nations. Built to ensure both speed and security, this application leverages the robustness of WASM to facilitate efficient and fast ZIP code queries directly from the client's browser, reducing server load and enhancing user experience. It is uniquely configured for a NO-OPS architecture, eliminating the need for traditional operational overhead. This makes it an ideal solution for developers and businesses looking for a scalable, maintenance-free geographic data retrieval system that emphasizes privacy and performance.
 
+
+[Demo: Click Here](https://zip-code-embedded-rlrioea8.fermyon.app/zip?code=89144)
+
+
 ### Build
 
 ```console
