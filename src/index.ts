@@ -42739,42 +42739,41 @@ const zipData = {
     
 }
 
-let status = 200
 
-
+// Type declaration for handling HTTP requests
 export const handleRequest: HandleRequest = async function (request: HttpRequest): Promise<HttpResponse> {
+    // Initialize default location and response status
+    let location: { lat: number; lng: number } | undefined;
+    let status = 200;
+    const requiredZipLength = 5;
 
+    // Extract ZIP code from the URL query parameter 'code'
     const url = new URL(request.uri);
     const params = new URLSearchParams(url.search);
-    let codeString = params.get('code');
+    let zipCode = params.get('code') || '0';
 
-    if (!codeString) {
-        codeString='0'
+    // Ensures the ZIP code is of the required length, padding with zeros if necessary
+    function formatZipCode(input: string): string {
+        if (input.length < requiredZipLength) {
+            return input.padStart(requiredZipLength, '0');
+        }
+        return input;
     }
+    zipCode = formatZipCode(zipCode);
 
-
-    let location: { lat: number; lng: number } | undefined;
-
-    switch (request.method) {
-        case "POST":
-          break;
-        case "GET":
-          console.log('Getting it.... ym')
-          //location = zipData[codeString];
-          location = zipData[codeString as keyof typeof zipData];
-
-          break;
-        case "DELETE":
-          break;
-        case "HEAD":
-          break;
-        default:
-      }
+    // Handle GET requests by looking up location data based on the ZIP code
+    if (request.method === "GET") {
+        location = zipData[zipCode as keyof typeof zipData];
+        if (!location) {
+            // Set location to a default value and update status to indicate a bad request
+            location = { lat: 0, lng: 0 };
+            status = 400;
+        }
+    }
     
-      console.log('return status and body')
-
-      return {
+    // Return the HTTP response with the location data and status code
+    return {
         status: status,
         body: JSON.stringify(location)
-      }
+    };
 }
