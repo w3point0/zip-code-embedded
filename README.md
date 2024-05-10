@@ -83,6 +83,7 @@ export const handleRequest: HandleRequest = async function (request: HttpRequest
 ```
 
 [Fermyon.com](https://www.fermyon.com/)  
-![image](https://github.com/w3point0/zip-code-embedded/assets/993459/7cb7b6ed-4652-45e4-a89d-41c5ca67ecef)
+![image](https://github.com/w3point0/zip-code-embedded/assets/993459/79b4eaf2-c04c-42b4-b106-64d1b4ad049d)  
+
 
 
