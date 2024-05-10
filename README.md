@@ -40,7 +40,7 @@ In Big O notation, which measures how well an algorithm scales, accessing an ite
 "99950": { "lat": 55.34, "lng": -131.64 }
 ```
 
-### The Code - Not Much. Howver, there is a 
+### The Code - Not Much. Less is more! 
 ```
 // Type declaration for handling HTTP requests
 export const handleRequest: HandleRequest = async function (request: HttpRequest): Promise<HttpResponse> {
